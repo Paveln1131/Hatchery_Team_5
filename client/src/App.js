@@ -4,7 +4,7 @@ import LoanCalculator from './bricks/LoanCalculator'; */
 import logo from "./images/logo.png"
 
 import React, { useState } from 'react';
-import { Form, Modal, Button } from 'react-bootstrap';
+import { Form, Modal, Button, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import base64 from 'base-64'
@@ -18,7 +18,8 @@ function App() {
 
   const [loginData, setLoginData] = useState(defaultLoginData);
   const [loginCall, setLoginCall] = useState({
-    state: "inactive"
+    state: "inactive",
+    data: ""
   })
 
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -31,7 +32,6 @@ function App() {
 
     return setLoginData(newLoginData);
   }
-  /* console.log(loginData); */
 
   const formateLoginData = (login, password) => {
     return `${login}:${password}`
@@ -44,6 +44,9 @@ function App() {
     console.log(form); */
 
     setLoginCall({ state: "pending" });
+/*     console.log(loginCall.state)
+    console.log(formateLoginData(loginData.login, loginData.password))
+    console.log(base64.encode(formateLoginData(loginData.login, loginData.password))) */
 
     fetch("/login", {
       method: "GET",
@@ -57,10 +60,10 @@ function App() {
         setLoginCall({ state: "error", error: responseJson});
       } else {
         setLoginCall({ state: "success", data: responseJson});
+
         handleCloseLoginModal();
       }
-    });
-    console.log(loginCall);
+    }); 
   }
 
   return (
@@ -75,10 +78,21 @@ function App() {
               height={80}
           />
         </div>
-        <div id="nav-links">
-          <div onClick={handleShowLoginModal}>
-            Přihlášení
-          </div>
+        <div id="navbar-links">
+          { loginCall.state !== "success"
+            ? <Button id="navbar-login-btn" onClick={handleShowLoginModal}>Přihlášení</Button>
+            : <Dropdown>
+                <Dropdown.Toggle id="user-dropdown-btn">
+                  { loginCall.data.name } ({ loginCall.data.roles[0] })
+                </Dropdown.Toggle>
+      
+            <Dropdown.Menu>
+              <Dropdown.Item href="#/action-1">Žádosti</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">Odhlásit</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          }
+          
         </div>
       </nav>
 
