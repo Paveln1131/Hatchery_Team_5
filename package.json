@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@types/jest": "^29.0.3",
+    "@types/node": "^18.7.18",
+    "@types/react": "^18.0.20",
+    "@types/react-dom": "^18.0.6",
+    "bootstrap": "^5.2.1",
+    "mdi": "^2.2.43",
+    "tsconfig.json": "^1.0.11",
+    "typescript": "^4.8.3"
+  }
+}
