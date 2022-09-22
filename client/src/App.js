@@ -1,15 +1,20 @@
 import './App.css';
-/* import RequestList from './bricks/RequestList'
-import LoanCalculator from './bricks/LoanCalculator'; */
 import logo from "./images/logo.png"
-
-import React, { useState } from 'react';
 import { Form, Modal, Button, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { Outlet, useNavigate } from "react-router-dom";
+
 import base64 from 'base-64'
 
+import React, { useState, useContext } from 'react';
+import UserContext from "./UserProvider";
+/* import RequestList from './bricks/RequestList'
+import LoanCalculator from './bricks/LoanCalculator'; */
+
 function App() {
+  const navigate = useNavigate();
+  const { toggleAuthorization, authorization } = useContext(UserContext);
 
   const defaultLoginData = {
     login: "",
@@ -60,14 +65,25 @@ function App() {
         setLoginCall({ state: "error", error: responseJson});
       } else {
         setLoginCall({ state: "success", data: responseJson});
-
+        console.log(responseJson)
+        console.log(loginCall.data)
+        toggleAuthorization(responseJson.roles)
+        setLoginData(defaultLoginData);
         handleCloseLoginModal();
       }
     }); 
   }
 
-  return (
+  const handleLogout = () => {
+    setLoginCall({ 
+      state: "inactive",
+      data: ""
+    })
+  }
 
+  console.log(authorization);
+
+  return (
     <div className="App">
       <nav id="navbar">
         <div id="logo-container">
@@ -85,14 +101,12 @@ function App() {
                 <Dropdown.Toggle id="user-dropdown-btn">
                   { loginCall.data.name } ({ loginCall.data.roles[0] })
                 </Dropdown.Toggle>
-      
-            <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Žádosti</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Odhlásit</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+                <Dropdown.Menu id="dropdown-menu">
+                  <Dropdown.Item onClick={() => navigate("loanCalculator")}>Žádosti</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>Odhlásit</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
           }
-          
         </div>
       </nav>
 
@@ -159,6 +173,8 @@ function App() {
           </Modal.Footer>
         </Form>
       </Modal>
+
+      <Outlet />
     </div>
   );
 }

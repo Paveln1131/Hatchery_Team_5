@@ -30,28 +30,27 @@
   width: 100%;
 }
 
-#navbar-login-btn {
+#navbar-links {
+  width: 220px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#navbar-login-btn, #user-dropdown-btn {
   background-color: var(--secondary-color);
   border: 1px solid var(--primary-color);
   color: var(--primary-color);
   font-weight: 700;
 }
 
-#navbar-login-btn:hover {
+#navbar-login-btn:hover, #user-dropdown-btn:hover {
   color: var(--secondary-color);
   background-color: var(--primary-color);
   box-shadow: 0 0 10px var(--primary-color);
 }
 
-#user-dropdown-btn {
-  font-weight: 700;
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  border: 1px solid var(--primary-color);
-}
-
-#user-dropdown-btn:hover {
-  box-shadow: 0 0 10px var(--secondary-color);
+#dropdown-menu {
+  width: 100%;
 }
 
 .heading {
@@ -81,5 +80,9 @@
 #login-btn {
   background-color: var(--primary-color);
   color: var(--secondary-color);
-  border: 1px solid var(--secondary-color)
+  border: none;
+}
+
+#login-btn:hover {
+  box-shadow: 0 0 10px var(--primary-color);
 }
