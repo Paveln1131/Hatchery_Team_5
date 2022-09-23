@@ -72,7 +72,7 @@ function App() {
       } else {
         setLoginCall({ state: "success", data: responseJson});
         /* console.log(responseJson)
-        console.log(loginCall.data) */
+        console.log(loginCall) */
         toggleAuthorization(responseJson.roles)
         setLoginData(defaultLoginData);
         handleCloseLoginModal();
@@ -112,7 +112,6 @@ function App() {
                     { loginCall.data.name } ({ loginCall.data.roles[0] })
                   </Dropdown.Toggle>
                   <Dropdown.Menu id="dropdown-menu">
-                    <Dropdown.Item>Žádosti</Dropdown.Item>
                     <Dropdown.Item onClick={handleLogout}>ODHLÁSIT</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

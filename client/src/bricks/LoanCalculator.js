@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {Form, Button, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../UserProvider";
 
 
 function LoanCalculator() {
   const navigate = useNavigate();
+  const { collectDataFromCalculator } = useContext(UserContext);
 
   // Initial values
   const minAmount = 5000;
@@ -46,6 +48,10 @@ function LoanCalculator() {
         calculate();
       
     }, [amountSlider, numofMonthsSlider])
+
+    const handleSubmit = () => {
+        collectDataFromCalculator(amountSlider, numofMonthsSlider, results)
+    }
 
 
 
@@ -111,7 +117,11 @@ function LoanCalculator() {
                     <div>RPSN: {results.RPSN}%</div>
                     <div>Celková částka ke splacení {results.overallAmount} Kč</div>
                     <div>Fixní poplatek (od 200 0000 Kč výše): {results.fixedFee} Kč</div>
-                    <Button onClick={() => navigate("../requestForm")}>
+                    <Button onClick={() => {
+                                handleSubmit();
+                                navigate("../requestForm")}
+                            }
+                    >
                         Odeslat
                     </Button>
                 </div>}

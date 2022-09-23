@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import styles from "../css/RequestForm.module.css"
+import UserContext from "../UserProvider";
+/* import { useNavigate } from 'react-router-dom'; */
 
 export default function RequestForm() {
+    const { calculatorData } = useContext(UserContext);
+    console.log(calculatorData);
     const defaultForm = {
         applicantType: "",
         name: "",
         surname: "",
         birthNum: "",
         nationality: "",
-        email: "",
+        email: "+420",
         phone: "",
         IC: "",
         position: "",
@@ -55,7 +59,7 @@ export default function RequestForm() {
             setValidated(true);
         }
 
-        console.log(formData);
+        /* console.log(formData); */
 
         setRequestAddCall({ state: "pending" });
         fetch("/request/create", {
@@ -66,7 +70,7 @@ export default function RequestForm() {
             body: JSON.stringify(formData)
         }).then(async (response) => {
             const responseJson = await response.json();
-            console.log(responseJson);
+            /* console.log(responseJson); */
             if (response.status >= 400) {
                 setRequestAddCall({ state: "error", error: responseJson});
             } else {
@@ -195,16 +199,51 @@ export default function RequestForm() {
                     </Form.Control.Feedback>
 
                     <Form.Label className={styles.label}>Pozice</Form.Label>
-                    <Form.Control
-                        className={styles.input}
-                        type="text"
-                        value={formData.position}
-                        onChange={(e) => setInputField("position", e.target.value)}
-                        required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        Zadejte Vaše příjmení
-                    </Form.Control.Feedback>
+                        <Form.Select
+                            className={styles.input}
+                            value={formData.position}
+                            onChange={(e) => setInputField("position", e.target.value)}
+                            required
+                        >
+                        <option>členka představenstva</option>
+                        <option>členka správní rady</option>
+                        <option>členka výboru</option>
+                        <option>člen představenstva</option>
+                        <option>člen psprávní rady</option>
+                        <option>člen výboru</option>
+                        <option>ekonom</option>
+                        <option>ekonomka</option>
+                        <option>generální ředitel</option>
+                        <option>generální ředitelka</option>
+                        <option>jednatel</option>
+                        <option>jednatelka</option>
+                        <option>místopředseda</option>
+                        <option>místopředsedkyně</option>
+                        <option>místostarosta</option>
+                        <option>místostarostka</option>
+                        <option>předseda</option>
+                        <option>předseda představenstva</option>
+                        <option>předseda správní rady</option>
+                        <option>předsedkyně</option>
+                        <option>předsedkyně představenstva</option>
+                        <option>předsedkyně správní rady</option>
+                        <option>primátor</option>
+                        <option>primátorka</option>
+                        <option>prokurista</option>
+                        <option>prokuristka</option>
+                        <option>ředitel</option>
+                        <option>ředitelka</option>
+                        <option>společník</option>
+                        <option>starosta</option>
+                        <option>starostka</option>
+                        <option>statutární ředitel</option>
+                        <option>statutární ředitelka</option>
+                        <option>účetní</option>
+                        <option>zástupce</option>
+                        <option>zástupkyně</option>
+                        <option>zplnomocněná</option>
+                        <option>zplnomocněný</option>
+                    </Form.Select>
                 </Form.Group>
 
             ) : (
@@ -278,7 +317,7 @@ export default function RequestForm() {
                 <Form.Label className={styles.label}>Číslo popisné</Form.Label>
                 <Form.Control
                     className={styles.input}
-                    type="number"
+                    type="text"
                     value={formData.address.descNumber}
                     onChange={(e) => setAddressInputField("descNumber", parseInt(e.target.value))}
                     required
@@ -292,7 +331,7 @@ export default function RequestForm() {
                 <Form.Label className={styles.label}>Číslo orientační</Form.Label>
                 <Form.Control
                     className={styles.input}
-                    type="number"
+                    type="text"
                     value={formData.address.indicativeNumber}
                     onChange={(e) => setAddressInputField("indicativeNumber", parseInt(e.target.value))}
                     required
