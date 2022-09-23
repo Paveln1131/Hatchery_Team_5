@@ -129,7 +129,8 @@ function LoanCalculator() {
                     <div>Fixní poplatek (od 200 0000 Kč výše): {results.fixedFee.toLocaleString()} Kč</div>
                     <div className={styles.summary}>Celková částka ke splacení: {results.overallAmount.toLocaleString()} Kč</div>
                    
-                    <Button className={styles.button} onClick={() => {
+                    <Button className={styles.button} 
+                            onClick={() => {
                                 handleSubmit();
                                 navigate("../requestForm")}
                             }
