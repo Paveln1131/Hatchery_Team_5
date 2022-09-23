@@ -25,8 +25,6 @@ function RequestList(){
         });
     }, []);
 
-    console.log(requestListLoadCall.data)
-
     function getChild() {
         switch (requestListLoadCall.state) {
             case "pending":
@@ -36,6 +34,8 @@ function RequestList(){
                     </div>
                 );
             case "success":
+
+
                 return (
                     <>
                         <Request requestList={requestListLoadCall.data} />

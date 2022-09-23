@@ -5,17 +5,14 @@
     margin: auto;
     margin-top: 100px;
 
+    display: flex;
+
     font-size: 20px;
 
 
 }
 
 .title{
-    position: relative;
-    width: 240px;
-    height: 48px;
-    left: 40px;
-    top: 10px;
 
     text-align: left;
     font-size: 24px;
@@ -28,11 +25,8 @@
 }
 
 .appNumber{
-    position: relative;
-    width: 21px;
-    height: 36px;
-    left: 40px;
-    top: 10px;
+
+
 
     text-align: left;
 
@@ -44,12 +38,10 @@
     color: #004821;
 }
 .appName{
-    position: relative;
-    width: 196px;
-    height: 36px;
+
     text-align: left;
-    left: -150px;
-    top: 10px;
+    left: -160px;
+
 
     font-family: 'Poppins', serif;
     font-style: normal;
@@ -59,12 +51,10 @@
     color: #000000;
 }
 
-.appEmail{
-    position: relative;
-    width: 67px;
-    height: 36px;
-    left: -180px;
-    top: 10px;
+.appDate{
+
+    min-width: 110px;
+
 
     text-align: left;
 
@@ -75,12 +65,9 @@
 
     color: #000000;
 }
-.appPhoneNumber{
-    position: relative;
-    width: 172px;
-    height: 36px;
-    left: -130px;
-    top: 10px;
+.appNumOfMonths{
+
+
 
     text-align: left;
 
@@ -93,11 +80,8 @@
 
 }
 .appLoanAmount{
-    position: relative;
-    width: 145px;
-    height: 36px;
-    left: -130px;
-    top: 10px;
+
+
 
     text-align: left;
     font-family: 'Poppins', serif;
@@ -107,28 +91,22 @@
 
     color: #000000;
 }
-.appMonthPayment{
-    position: relative;
-    width: 188px;
-    height: 36px;
-    left: -130px;
-    top: 10px;
+.appStatus{
+
+
 
     text-align: left;
     font-family: 'Poppins', serif;
     font-style: normal;
     font-weight: 500;
     line-height: 36px;
+
 
     color: #000000;
 
 }
 .appDetail{
-    position: relative;
-    width: 70px;
-    height: 36px;
-    left: -130px;
-    top: 10px;
+
     text-align: left;
     font-family: 'Poppins', serif;
     font-style: normal;
@@ -137,10 +115,14 @@
 
     color: #000000;
 }
-.line{
-    position: relative;
-    width: 1270px;
-    height: 1.8px;
 
+.appEdit{
+
+    padding: 0;
+    width: 0px;
+}
+.appDelete{
+    padding: 0;
+    width: 0px;
 }
 
