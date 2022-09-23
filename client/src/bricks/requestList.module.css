@@ -1,0 +1,128 @@
+.container{
+
+    width: 90%;
+
+    margin: auto;
+    margin-top: 100px;
+
+    display: flex;
+
+    font-size: 20px;
+
+
+}
+
+.title{
+
+    text-align: left;
+    font-size: 24px;
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 48px;
+
+    color: #004821;
+}
+
+.appNumber{
+
+
+
+    text-align: left;
+
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 36px;
+
+    color: #004821;
+}
+.appName{
+
+    text-align: left;
+    left: -160px;
+
+
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 36px;
+
+    color: #000000;
+}
+
+.appDate{
+
+    min-width: 110px;
+
+
+    text-align: left;
+
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 36px;
+
+    color: #000000;
+}
+.appNumOfMonths{
+
+
+
+    text-align: left;
+
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 36px;
+
+    color: #000000;
+
+}
+.appLoanAmount{
+
+
+
+    text-align: left;
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 36px;
+
+    color: #000000;
+}
+.appStatus{
+
+
+
+    text-align: left;
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 36px;
+
+
+    color: #000000;
+
+}
+.appDetail{
+
+    text-align: left;
+    font-family: 'Poppins', serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 36px;
+
+    color: #000000;
+}
+
+.appEdit{
+
+    padding: 0;
+    width: 0px;
+}
+.appDelete{
+    padding: 0;
+    width: 0px;
+}
+
