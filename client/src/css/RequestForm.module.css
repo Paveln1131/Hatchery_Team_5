@@ -1,0 +1,105 @@
+:root {
+    --primary-color: rgb(0, 132, 61);
+    --secondary-color: rgb(255, 255, 255);
+}
+  
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h2 {
+    color: var(--primary-color);
+    margin: 40px 0 0 0;
+    font-weight: 700;
+    font-size: 1.9rem;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 100px;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 10px 0 10px 0;
+}
+
+.inputSection {
+    width: 30px;
+    height: 30px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-weight: 700;
+    font-size: 1.4rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+h3 {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.3rem;
+    max-width: 60px;
+    position: relative;
+}
+
+h3:before {
+    content: "";
+    display: block;
+    width: 180px;
+    height: 2px;
+    background: var(--primary-color);
+    left: 30px;
+    top: 50%;
+    position: absolute;
+    z-index: -1;
+}
+
+h3:after {
+    content: "";
+    display: block;
+    width: 180px;
+    height: 2px;
+    background: var(--primary-color);
+    right: 30px;
+    top: 50%;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputGroup {
+    width: 80%;
+    text-align: left;
+}
+
+.input:focus, .input:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+#submitButton {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    margin: 50px;
+    padding: 12px 20px;
+}
+
+#submitButton:hover {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.label {
+    margin: 10px 0 0 0;
+}

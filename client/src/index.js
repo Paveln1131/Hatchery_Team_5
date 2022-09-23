@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import LoanCalculatorPage from './routes/LoanCalculatorPage';
+import RequestListPage from './routes/RequestListPage';
 
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './UserProvider';
@@ -15,7 +15,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route path="loanCalculator" element={<LoanCalculatorPage/>} />
+            <Route path="requestList" element={<RequestListPage/>} />
           </Route>
         </Routes>
       </BrowserRouter>

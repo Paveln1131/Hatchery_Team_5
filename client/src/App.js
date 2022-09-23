@@ -11,6 +11,7 @@ import React, { useState, useContext } from 'react';
 import UserContext from "./UserProvider";
 /* import RequestList from './bricks/RequestList'
 import LoanCalculator from './bricks/LoanCalculator'; */
+import RequestForm from './bricks/RequestForm';
 
 function App() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function App() {
     password: ""
   }
 
+  const [validated, setValidated] = useState(false);
   const [loginData, setLoginData] = useState(defaultLoginData);
   const [loginCall, setLoginCall] = useState({
     state: "inactive",
@@ -45,8 +47,11 @@ function App() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
 
-/*     const form = e.currentTarget;
-    console.log(form); */
+    const form = e.currentTarget;
+    /* console.log(form); */
+    if (!form.checkValidity()) {
+      setValidated(true);
+    }
 
     setLoginCall({ state: "pending" });
 /*     console.log(loginCall.state)
@@ -96,16 +101,18 @@ function App() {
         </div>
         <div id="navbar-links">
           { loginCall.state !== "success"
-            ? <Button id="navbar-login-btn" onClick={handleShowLoginModal}>Přihlášení</Button>
-            : <Dropdown>
-                <Dropdown.Toggle id="user-dropdown-btn">
-                  { loginCall.data.name } ({ loginCall.data.roles[0] })
-                </Dropdown.Toggle>
-                <Dropdown.Menu id="dropdown-menu">
-                  <Dropdown.Item onClick={() => navigate("loanCalculator")}>Žádosti</Dropdown.Item>
-                  <Dropdown.Item onClick={handleLogout}>Odhlásit</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+            ? <Button id="navbar-login-btn" onClick={handleShowLoginModal}>PŘIHLÁSIT</Button>
+            : <div>
+                <Dropdown>
+                  <Dropdown.Toggle id="user-dropdown-btn">
+                    { loginCall.data.name } ({ loginCall.data.roles[0] })
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu id="dropdown-menu">
+                    <Dropdown.Item onClick={() => navigate("requestList")}>Žádosti</Dropdown.Item>
+                    <Dropdown.Item onClick={handleLogout}>ODHLÁSIT</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>  
           }
         </div>
       </nav>
@@ -116,7 +123,7 @@ function App() {
       </div>
 
       <Modal show={showLoginModal} onHide={handleCloseLoginModal}>
-        <Form noValidate onSubmit={(e) => handleLoginSubmit(e)}>
+        <Form noValidate validated={validated} onSubmit={(e) => handleLoginSubmit(e)}>
           <Modal.Header closeButton>
             <Modal.Title>Přihlášení</Modal.Title>
           </Modal.Header>
@@ -173,6 +180,8 @@ function App() {
           </Modal.Footer>
         </Form>
       </Modal>
+
+      <RequestForm></RequestForm>
 
       <Outlet />
     </div>
