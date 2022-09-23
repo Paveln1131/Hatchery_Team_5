@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Form, Button, Col } from "react-bootstrap";
 
 
-/* OPTIMALIZOVAT VOLÁNÍ, ZPOŽDĚNÍ U VOLÁNÍ, PO TISÍCOVKÁCH ABY SKÁKALA PŮJČKA. Přepočítání u zastavení jezdce? VYŠPERKOVAT, TO NEJDŮLEŽITĚJŠÍ*/
 function LoanCalculator() {
 
   // Initial values
@@ -10,6 +9,7 @@ function LoanCalculator() {
   const maxAmount = 1200000;
   const minnumOfMonths = 6;
   const maxnumOfMonths = 60;
+  const [show, setShow] = useState(false)
 
   // Sliders
     const [amountSlider, setAmountSlider] = useState(minAmount)
@@ -24,7 +24,7 @@ function LoanCalculator() {
     
     useEffect(() => {
         async function calculate() {
-            // console.log({amountSliderValue, monthsSliderValue})
+          
             const payload = {
                 amount: amountSlider,
                 numOfMonths: numofMonthsSlider
@@ -44,8 +44,6 @@ function LoanCalculator() {
         calculate();
       
     }, [amountSlider, numofMonthsSlider])
-
-
 
 
 
@@ -100,20 +98,26 @@ function LoanCalculator() {
                             <Col>Maximální počet let: {maxnumOfMonths / 12}</Col>
                        
                 </Form.Group>
-         
+                <Button onClick={() => setShow(!show)}>
+               {show === true ? "Schovat výsledky" : "Ukázat výsledky"}
+            </Button>
+           
              
-              <div>
-                <div>Měsíční splátka: {results.monthlyPayment} Kč</div>
-                <div>Úrok: {results.yearlyInterest}%</div>
-                <div>RPSN: {results.RPSN}%</div>
-                <div>Celková částka ke splacení {results.overallAmount} Kč</div>
-                <div>Fixní poplatek (od 200 0000 Kč výše): {results.fixedFee} Kč</div>
-            </div>
+        {show && <div>
+                    <div>Měsíční splátka: {results.monthlyPayment} Kč</div>
+                    <div>Úrok: {results.yearlyInterest}%</div>
+                    <div>RPSN: {results.RPSN}%</div>
+                    <div>Celková částka ke splacení {results.overallAmount} Kč</div>
+                    <div>Fixní poplatek (od 200 0000 Kč výše): {results.fixedFee} Kč</div>
+                    <Button>
+                        Odeslat
+                    </Button>
+                </div>}
+                
+           
 
     
-            <Button>
-               Odeslat
-            </Button>
+            
         </div>
 
     )
@@ -122,8 +126,5 @@ function LoanCalculator() {
 
 
 export default LoanCalculator;
-
-
-/* na request přitečou data, nastavit do statu a poté ukázat přímo ... pending, success, na pending schovaný jako v kuchařce, case success*/
 
 
