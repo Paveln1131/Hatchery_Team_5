@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import RequestListPage from './routes/RequestListPage';
+import RequestFormPage from './bricks/RequestForm';
+import HomePage from './routes/HomePage';
 
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './UserProvider';
@@ -15,7 +17,9 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
+            <Route path="" element={<HomePage/>} />
             <Route path="requestList" element={<RequestListPage/>} />
+            <Route path="requestForm" element={<RequestFormPage/>} />
           </Route>
         </Routes>
       </BrowserRouter>

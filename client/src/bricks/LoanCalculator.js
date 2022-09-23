@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Form, Button, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 
 function LoanCalculator() {
+  const navigate = useNavigate();
 
   // Initial values
   const minAmount = 5000;
@@ -109,7 +111,7 @@ function LoanCalculator() {
                     <div>RPSN: {results.RPSN}%</div>
                     <div>Celková částka ke splacení {results.overallAmount} Kč</div>
                     <div>Fixní poplatek (od 200 0000 Kč výše): {results.fixedFee} Kč</div>
-                    <Button>
+                    <Button onClick={() => navigate("../requestForm")}>
                         Odeslat
                     </Button>
                 </div>}

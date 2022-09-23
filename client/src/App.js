@@ -9,9 +9,10 @@ import base64 from 'base-64'
 
 import React, { useState, useContext } from 'react';
 import UserContext from "./UserProvider";
-/* import RequestList from './bricks/RequestList'
-import LoanCalculator from './bricks/LoanCalculator'; */
-import RequestForm from './bricks/RequestForm';
+
+/* import RequestForm from './bricks/RequestForm';
+import LoanCalculator from './bricks/LoanCalculator';
+import RequestList from './bricks/RequestList'; */
 
 function App() {
   const navigate = useNavigate();
@@ -70,11 +71,12 @@ function App() {
         setLoginCall({ state: "error", error: responseJson});
       } else {
         setLoginCall({ state: "success", data: responseJson});
-        console.log(responseJson)
-        console.log(loginCall.data)
+        /* console.log(responseJson)
+        console.log(loginCall.data) */
         toggleAuthorization(responseJson.roles)
         setLoginData(defaultLoginData);
         handleCloseLoginModal();
+        navigate("requestList");
       }
     }); 
   }
@@ -84,9 +86,11 @@ function App() {
       state: "inactive",
       data: ""
     })
+    toggleAuthorization({ role: [] });
+    navigate("../");
   }
 
-  console.log(authorization);
+  /* console.log(authorization); */
 
   return (
     <div className="App">
@@ -108,7 +112,7 @@ function App() {
                     { loginCall.data.name } ({ loginCall.data.roles[0] })
                   </Dropdown.Toggle>
                   <Dropdown.Menu id="dropdown-menu">
-                    <Dropdown.Item onClick={() => navigate("requestList")}>Žádosti</Dropdown.Item>
+                    <Dropdown.Item>Žádosti</Dropdown.Item>
                     <Dropdown.Item onClick={handleLogout}>ODHLÁSIT</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -116,11 +120,19 @@ function App() {
           }
         </div>
       </nav>
-
-      <div className="heading">
-        <h1>Online půjčka</h1>
-        <p>Výhodný spotřebitelský úvěr sjednáte online z mobilu již za pár minut</p>
-      </div>
+      
+      { authorization[0] ? (
+          <div className="heading">
+            <h1>Správa žádostí</h1>
+            <p>Seznam žadatelů o spotřebitelský úvěr</p>
+          </div>
+      ) : (
+        <div className="heading">
+          <h1>Online půjčka</h1>
+          <p>Výhodný spotřebitelský úvěr sjednáte online z mobilu již za pár minut</p>
+        </div>
+      )}
+      
 
       <Modal show={showLoginModal} onHide={handleCloseLoginModal}>
         <Form noValidate validated={validated} onSubmit={(e) => handleLoginSubmit(e)}>
@@ -181,7 +193,8 @@ function App() {
         </Form>
       </Modal>
 
-      <RequestForm></RequestForm>
+      {/* { !authorization[0] ? <LoanCalculator></LoanCalculator> : <RequestList></RequestList> } */}
+
 
       <Outlet />
     </div>
