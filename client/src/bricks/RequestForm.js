@@ -1,25 +1,27 @@
 import React, { useState, useContext } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Alert } from 'react-bootstrap';
 import styles from "../css/RequestForm.module.css"
 import UserContext from "../UserProvider";
-/* import { useNavigate } from 'react-router-dom'; */
+import { useNavigate } from 'react-router-dom';
 
 export default function RequestForm() {
+    const navigate = useNavigate();
+    const phoneRegex = "[0-9 +]+";
     const { calculatorData } = useContext(UserContext);
-    console.log(calculatorData);
+
     const defaultForm = {
         applicantType: "",
         name: "",
         surname: "",
         birthNum: "",
         nationality: "",
-        email: "+420",
-        phone: "",
+        email: "",
+        phone: "+420",
         IC: "",
         position: "",
         companyName: "",
-        amount: 100000,
-        numOfMonths: 24,
+        amount: calculatorData.amount,
+        numOfMonths: calculatorData.numOfMonths,
         address: {
             street: "",
             descNumber: "",
@@ -33,12 +35,12 @@ export default function RequestForm() {
     const [validated, setValidated] = useState(false);
     const [applicantType, setApplicantType] = useState("")
     const [requestAddCall, setRequestAddCall] = useState({
-        state: "inactive"
+        state: "inactive",
     })
 
     const setInputField = (key, value) => {
         const newData = {...formData};
-        newData[key] = value;
+        newData[key] = value.trim();
 
         return setFormData(newData);
     }
@@ -52,6 +54,7 @@ export default function RequestForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        /* formData.phone.replaceAll(' ', ''); */
 
         const form = e.currentTarget;
 
@@ -59,7 +62,7 @@ export default function RequestForm() {
             setValidated(true);
         }
 
-        /* console.log(formData); */
+        console.log(formData);
 
         setRequestAddCall({ state: "pending" });
         fetch("/request/create", {
@@ -70,14 +73,15 @@ export default function RequestForm() {
             body: JSON.stringify(formData)
         }).then(async (response) => {
             const responseJson = await response.json();
-            /* console.log(responseJson); */
+            console.log(responseJson);
             if (response.status >= 400) {
                 setRequestAddCall({ state: "error", error: responseJson});
             } else {
                 setRequestAddCall({ state: "success", data: responseJson});
             }
         });
-        console.log(requestAddCall);
+
+        
     }
 
   return (
@@ -285,6 +289,7 @@ export default function RequestForm() {
                     type="text"
                     value={formData.phone}
                     onChange={(e) => setInputField("phone", e.target.value)}
+                    pattern={phoneRegex}
                     required
                 />
                 <Form.Control.Feedback type="invalid">
@@ -359,7 +364,7 @@ export default function RequestForm() {
                 <Form.Label className={styles.label}>PSČ</Form.Label>
                 <Form.Control
                     className={styles.input}
-                    type="number"
+                    type="text"
                     value={formData.address.postalCode}
                     onChange={(e) => setAddressInputField("postalCode", parseInt(e.target.value))}
                     required
@@ -375,6 +380,7 @@ export default function RequestForm() {
             >
                 ODESLAT ŽÁDOST
             </Button>
+            { requestAddCall.error ? <Alert variant='danger'>{requestAddCall.error.errorMessage}</Alert> : null }
         </Form>
     </div>
   )

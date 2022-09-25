@@ -5,6 +5,7 @@ import App from './App';
 import RequestListPage from './routes/RequestListPage';
 import RequestFormPage from './bricks/RequestForm';
 import HomePage from './routes/HomePage';
+import ClientPage from './routes/ClientPage';
 
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './UserProvider';
@@ -12,7 +13,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+/*   <React.StrictMode> */
     <UserProvider>
       <BrowserRouter>
         <Routes>
@@ -20,11 +21,12 @@ root.render(
             <Route path="" element={<HomePage/>} />
             <Route path="requestList" element={<RequestListPage/>} />
             <Route path="requestForm" element={<RequestFormPage/>} />
+            <Route path="clientPage" element={<ClientPage/>} />
           </Route>
         </Routes>
       </BrowserRouter>
     </UserProvider>
-  </React.StrictMode>
+/*   </React.StrictMode> */
 );
 
 // If you want to start measuring performance in your app, pass a function

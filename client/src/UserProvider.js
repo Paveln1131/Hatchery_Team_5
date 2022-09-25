@@ -24,7 +24,7 @@ export function UserProvider({ children }) {
         newCalculatorData.overallAmount = results.overallAmount;
         newCalculatorData.fixedFee = results.fixedFee;
 
-        setCalculatorData({newCalculatorData})
+        setCalculatorData({...newCalculatorData})
     }
 
     const toggleAuthorization = (auth) => {

@@ -21,6 +21,10 @@
   align-items: center;
 }
 
+#logo-container {
+  cursor: pointer;
+}
+
 #navbar {
   position: relative;
   display: flex;

@@ -87,7 +87,11 @@ function App() {
       data: ""
     })
     toggleAuthorization({ role: [] });
-    navigate("../");
+    navigate("/");
+  }
+
+  const navigateHome = () => {
+    navigate("/");
   }
 
   /* console.log(authorization); */
@@ -95,7 +99,7 @@ function App() {
   return (
     <div className="App">
       <nav id="navbar">
-        <div id="logo-container">
+        <div id="logo-container" onClick={navigateHome}>
           <img 
               id="logo"
               src={logo}

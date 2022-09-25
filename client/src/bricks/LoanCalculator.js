@@ -132,7 +132,7 @@ function LoanCalculator() {
                     <Button className={styles.button} 
                             onClick={() => {
                                 handleSubmit();
-                                navigate("../requestForm")}
+                                navigate("/requestForm")}
                             }
                     >Odeslat</Button>
                 </div>}
