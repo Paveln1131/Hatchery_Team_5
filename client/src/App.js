@@ -77,6 +77,7 @@ function App() {
       state: "inactive",
       data: ""
     })
+    sessionStorage.clear();
     toggleAuthorization({ role: [] });
     navigate("/");
   }

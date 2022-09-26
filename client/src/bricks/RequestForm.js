@@ -13,6 +13,14 @@ export default function RequestForm() {
 
     const { calculatorData } = useContext(UserContext);
 
+    if (calculatorData.amount) {
+        const sessionStoragePayload = {
+            amount: calculatorData.amount,
+            numOfMonths: calculatorData.numOfMonths
+        }
+        sessionStorage.setItem("calcData", JSON.stringify(sessionStoragePayload));
+    }
+
     const defaultForm = {
         applicantType: "",
         name: "",
@@ -24,8 +32,8 @@ export default function RequestForm() {
         IC: "",
         position: "",
         companyName: "",
-        amount: calculatorData.amount,
-        numOfMonths: calculatorData.numOfMonths,
+        amount: JSON.parse(sessionStorage.getItem("calcData")).amount,
+        numOfMonths: JSON.parse(sessionStorage.getItem("calcData")).numOfMonths,
         address: {
             street: "",
             descNumber: "",
@@ -64,10 +72,6 @@ export default function RequestForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        if (formData.phone) {
-            formData.phone = formData.phone.replaceAll(' ', '');
-        }
         
         const form = e.currentTarget;
 
