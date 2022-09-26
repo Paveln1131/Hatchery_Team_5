@@ -3,9 +3,11 @@ import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import RequestInfoForm from "./RequestInfoForm";
 import {useEffect, useState} from "react";
+import EvaluateRequest from "./EvaluateRequest";
 
 
-function Request({requestList}) {
+function Request(props) {
+
 
     const [ok,setOk] = useState(false)
 
@@ -13,15 +15,19 @@ function Request({requestList}) {
 
     const checkBoxMap = new Map()
 
-    requestList.map((request) => {
+    props.requestList.map((request) => {
         checkBoxMap.set(request.id,false)
     })
     const handleCheck = (id) => {
         checkBoxMap.set(id,(!checkBoxMap.get(id)))
         setOk(!ok)
-        console.log(checkBoxMap)
+       // console.log(checkBoxMap)
 
     }
+
+    const checkBoxList = [];
+
+
 
     return (
         <div className={styles.container}>
@@ -44,9 +50,9 @@ function Request({requestList}) {
                     </tr>
                     </thead>
                     <tbody>
-                    {requestList.map((request) => {
+                    {props.requestList.map((request) => {
 
-                        console.log(checkBoxMap.get(request.id))
+                       // console.log(checkBoxMap.get(request.id))
                         let dateOfCreation = new Date(request.created).toLocaleDateString('cz', {
                             year: "numeric",
                             month: "short",
@@ -64,14 +70,15 @@ function Request({requestList}) {
                                     </Form>
                                 </th>
                                 <td className={styles.appNumber}>{i}</td>
-                                <td className={styles.appName}>{request.companyName ?? (request.name + " " + request.surname)}</td>
+                                <td className={styles.appName}>{request.name + " " + request.surname}</td>
                                 <td className={styles.appDate}>{dateOfCreation}</td>
                                 <td className={styles.appNumOfMonths}>{request.numOfMonths}</td>
                                 <td className={styles.appLoanAmount}>{request.amount.toLocaleString() + " Kč"}</td>
                                 <td className={styles.appStatus}>{request.status}</td>
                                 <td className={styles.appEdit}>
-                                    <RequestInfoForm id={request.id}/>
+                                    <RequestInfoForm id={request.id} onRefres={props.onRefresh}/>
                                 </td>
+
                             </tr>
 
                         )
@@ -80,11 +87,18 @@ function Request({requestList}) {
 
                     </tbody>
                 </table>
-                <div>
-                    <Button variant="outline-success">Potvrdit</Button>
-                    <Button variant="outline-danger">Zamítnout</Button>
-                    <Button variant="danger">Smazat</Button>
-                </div>
+                <footer style={{display:"flex",justifyContent:"space-between",margin:"10px"}}>
+                    {
+                        props.requestList.map((request) => {
+                           // console.log(checkBoxMap.get(request.id))
+                            if (checkBoxMap.get(request.id)){
+                                checkBoxList.push(request.id)
+                            }
+
+                        })
+                    }
+                    <EvaluateRequest id={checkBoxList}></EvaluateRequest>
+                </footer>
             </div>
         </div>
 

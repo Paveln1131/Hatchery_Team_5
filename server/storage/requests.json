@@ -24,6 +24,30 @@
     "created": "Wed Mar 25 2015 01:00:00 GMT+0100"
   },
   {
+    "applicantType": "INDIVIDUAL",
+    "name": "Lorem",
+    "surname": "a",
+    "birthNum": "801007/5953",
+    "nationality": "CZ",
+    "email": "dolor.sit@amet.co",
+    "phone": "+420555444333",
+    "IC": null,
+    "companyName": null,
+    "amount": 150000,
+    "numOfMonths": 12,
+    "position": null,
+    "address": {
+      "street": "Accumsan",
+      "descNumber": 12,
+      "indicativeNumber": 2,
+      "city": "Duis",
+      "postalCode": 11111
+    },
+    "status": "PENDING",
+    "id": "x",
+    "created": "Wed Mar 25 2015 01:00:00 GMT+0100"
+  },
+  {
     "applicantType": "OSVC",
     "name": "Lacinia",
     "surname": "Fusce",
@@ -71,4 +95,4 @@
     "id": "wiVXhN73fR",
     "created": "Sat Sep 17 2022 19:31:42 GMT+0200"
   }
-  ]
+]
