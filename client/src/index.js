@@ -5,6 +5,7 @@ import App from './App';
 import RequestListPage from './routes/RequestListPage';
 import RequestFormPage from './bricks/RequestForm';
 import HomePage from './routes/HomePage';
+import ClientPage from './routes/ClientPage';
 
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './UserProvider';
@@ -20,6 +21,7 @@ root.render(
             <Route path="" element={<HomePage/>} />
             <Route path="requestList" element={<RequestListPage/>} />
             <Route path="requestForm" element={<RequestFormPage/>} />
+            <Route path="clientPage/:id" element={<ClientPage/>} />
           </Route>
         </Routes>
       </BrowserRouter>

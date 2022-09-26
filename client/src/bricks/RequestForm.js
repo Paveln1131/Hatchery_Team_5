@@ -1,25 +1,34 @@
-import React, { useState, useContext } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import React, { useState, useContext, useEffect } from 'react';
+import { Button, Form, Alert } from 'react-bootstrap';
 import styles from "../css/RequestForm.module.css"
 import UserContext from "../UserProvider";
-/* import { useNavigate } from 'react-router-dom'; */
+import { useNavigate } from 'react-router-dom';
 
 export default function RequestForm() {
+    const navigate = useNavigate();
+
+    const phoneRegex = "[0-9 +]+";
+
     const { calculatorData } = useContext(UserContext);
     console.log(calculatorData);
+
+    if (calculatorData.amount) {
+        sessionStorage.setItem("calculatorData", JSON.stringify(calculatorData));
+    }
+
     const defaultForm = {
         applicantType: "",
         name: "",
         surname: "",
         birthNum: "",
         nationality: "",
-        email: "+420",
+        email: "",
         phone: "",
         IC: "",
         position: "",
         companyName: "",
-        amount: 100000,
-        numOfMonths: 24,
+        amount: "",
+        numOfMonths: "",
         address: {
             street: "",
             descNumber: "",
@@ -33,8 +42,17 @@ export default function RequestForm() {
     const [validated, setValidated] = useState(false);
     const [applicantType, setApplicantType] = useState("")
     const [requestAddCall, setRequestAddCall] = useState({
-        state: "inactive"
+        state: "inactive",
     })
+
+    const setCalculatorData = () => {
+        const dataFromSessionStorage = JSON.parse(sessionStorage.getItem("calculatorData"));
+        const newData = {...formData};
+        newData.amount = dataFromSessionStorage.amount;
+        newData.numOfMonths = dataFromSessionStorage.numOfMonths;
+
+        return setFormData(newData);
+    }
 
     const setInputField = (key, value) => {
         const newData = {...formData};
@@ -50,16 +68,41 @@ export default function RequestForm() {
         return setFormData(newData);
     }
 
+    useEffect(() => {
+        if (requestAddCall.state === "success") {
+            navigate("/clientPage/" + requestAddCall.data.id);
+        }
+    }, [requestAddCall, navigate])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
         const form = e.currentTarget;
 
         if (!form.checkValidity()) {
             setValidated(true);
         }
 
-        /* console.log(formData); */
+        setCalculatorData();
+        if (formData.phone) {
+            formData.phone = formData.phone.replaceAll(' ', '');
+        }
+
+        const payload = {...formData}
+        
+/*         Object.keys(payload).forEach(key => {
+            if (payload[key] === '') {
+                delete payload[key];
+            }
+          });
+
+        Object.keys(payload.address).forEach(key => {
+            if (payload.address[key] === '') {
+                delete payload.address[key];
+            }
+        }); */
+
+        console.log(payload);
 
         setRequestAddCall({ state: "pending" });
         fetch("/request/create", {
@@ -67,17 +110,16 @@ export default function RequestForm() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(payload)
         }).then(async (response) => {
             const responseJson = await response.json();
-            /* console.log(responseJson); */
+            console.log(responseJson);
             if (response.status >= 400) {
-                setRequestAddCall({ state: "error", error: responseJson});
+                setRequestAddCall({ state: "error", error: responseJson});        
             } else {
                 setRequestAddCall({ state: "success", data: responseJson});
             }
         });
-        console.log(requestAddCall);
     }
 
   return (
@@ -88,9 +130,10 @@ export default function RequestForm() {
         <Form 
             className={styles.form}
             validated={validated}
-            noValidate onSubmit={(e) => handleSubmit(e)}>
-            <div className={styles.inputSection}>
-                <h3>1</h3>
+            noValidate onSubmit={(e) => handleSubmit(e)}
+        >
+            <div className={styles.inputDivider}>
+                <span className={styles.sectionNumber}>1</span>
             </div>
             <h4>Typ subjektu</h4>
             <Form.Group className={styles.inputGroup}>
@@ -104,15 +147,15 @@ export default function RequestForm() {
                     }}
                     required
                 >
-                    <option></option>
+                    <option>--- Vyberte typ subjektu ---</option>
                     <option value="INDIVIDUAL">Fyzická osoba</option>
                     <option value="OSVC">Podnikající fyzická osoba</option>
                     <option value="LEGAL_ENTITY">Právnická osoba</option>
                 </Form.Select>
             </Form.Group>
 
-            <div className={styles.inputSection}>
-                <h3>2</h3>
+            <div className={styles.inputDivider}>
+                <span className={styles.sectionNumber}>2</span>
             </div>
             <Form.Group className={styles.inputGroup}>
                 <Form.Label className={styles.label}>Křestní jméno</Form.Label>
@@ -285,6 +328,7 @@ export default function RequestForm() {
                     type="text"
                     value={formData.phone}
                     onChange={(e) => setInputField("phone", e.target.value)}
+                    pattern={phoneRegex}
                     required
                 />
                 <Form.Control.Feedback type="invalid">
@@ -292,8 +336,8 @@ export default function RequestForm() {
                 </Form.Control.Feedback>
             </Form.Group>
 
-            <div className={styles.inputSection}>
-                <h3>3</h3>
+            <div className={styles.inputDivider}>
+                <span className={styles.sectionNumber}>3</span>
             </div>
             { applicantType === "INDIVIDUAL" ? <h4>Adresa trvalého pobytu</h4> : null}
             { applicantType === "OSVC" ? <h4>Adresa trvalého pobytu</h4> : null}
@@ -359,7 +403,7 @@ export default function RequestForm() {
                 <Form.Label className={styles.label}>PSČ</Form.Label>
                 <Form.Control
                     className={styles.input}
-                    type="number"
+                    type="text"
                     value={formData.address.postalCode}
                     onChange={(e) => setAddressInputField("postalCode", parseInt(e.target.value))}
                     required
@@ -375,6 +419,7 @@ export default function RequestForm() {
             >
                 ODESLAT ŽÁDOST
             </Button>
+            { requestAddCall.error ? <Alert variant='danger'>{requestAddCall.error.errorMessage}</Alert> : null }
         </Form>
     </div>
   )

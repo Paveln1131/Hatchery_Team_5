@@ -24,6 +24,30 @@
     "created": "Wed Mar 25 2015 01:00:00 GMT+0100"
   },
   {
+    "applicantType": "INDIVIDUAL",
+    "name": "Lorem",
+    "surname": "a",
+    "birthNum": "801007/5953",
+    "nationality": "CZ",
+    "email": "dolor.sit@amet.co",
+    "phone": "+420555444333",
+    "IC": null,
+    "companyName": null,
+    "amount": 150000,
+    "numOfMonths": 12,
+    "position": null,
+    "address": {
+      "street": "Accumsan",
+      "descNumber": 12,
+      "indicativeNumber": 2,
+      "city": "Duis",
+      "postalCode": 11111
+    },
+    "status": "PENDING",
+    "id": "x",
+    "created": "Wed Mar 25 2015 01:00:00 GMT+0100"
+  },
+  {
     "applicantType": "OSVC",
     "name": "Lacinia",
     "surname": "Fusce",
@@ -70,5 +94,165 @@
     "status": "PENDING",
     "id": "wiVXhN73fR",
     "created": "Sat Sep 17 2022 19:31:42 GMT+0200"
+  },
+  {
+    "applicantType": "INDIVIDUAL",
+    "name": "Petr",
+    "surname": "Novák",
+    "birthNum": "0123456789",
+    "nationality": "cz",
+    "email": "roman.schmid@seznam.cz",
+    "phone": "+420789456123",
+    "IC": "",
+    "position": "",
+    "companyName": "",
+    "amount": 5000,
+    "numOfMonths": 6,
+    "address": {
+      "street": "Ulice",
+      "descNumber": 123,
+      "indicativeNumber": 123,
+      "city": "Mesto",
+      "postalCode": 12345
+    },
+    "created": "2022-09-26T06:44:39.702Z",
+    "status": "PENDING",
+    "id": "e1f0fb3482245add"
+  },
+  {
+    "applicantType": "OSVC",
+    "name": "Josef",
+    "surname": "Svoboda",
+    "birthNum": "",
+    "nationality": "cz",
+    "email": "roman.schmid@seznam.cz",
+    "phone": "+4205465",
+    "IC": "465231",
+    "position": "",
+    "companyName": "",
+    "amount": 785000,
+    "numOfMonths": 25,
+    "address": {
+      "street": "Uliceee",
+      "descNumber": 125,
+      "indicativeNumber": 125,
+      "city": "Plzen",
+      "postalCode": 12345
+    },
+    "created": "2022-09-26T07:57:04.128Z",
+    "status": "PENDING",
+    "id": "60a8a7e03a2b2d76"
+  },
+  {
+    "applicantType": "INDIVIDUAL",
+    "name": "dasadss",
+    "surname": "das",
+    "birthNum": "416546",
+    "nationality": "cz",
+    "email": "roman.schmid@seznam.cz",
+    "phone": "+4205646",
+    "IC": "",
+    "position": "",
+    "companyName": "",
+    "amount": 515000,
+    "numOfMonths": 20,
+    "address": {
+      "street": "afsdffd",
+      "descNumber": 125,
+      "indicativeNumber": 125,
+      "city": "me",
+      "postalCode": 21345
+    },
+    "created": "2022-09-26T07:59:39.012Z",
+    "status": "PENDING",
+    "id": "a8da71587f96e079"
+  },
+  {
+    "applicantType": "INDIVIDUAL",
+    "name": "Petr",
+    "surname": "Novák",
+    "birthNum": "123456789",
+    "nationality": "cz",
+    "email": "roman.schmid@seznam.cz",
+    "phone": "+420123456789+",
+    "IC": "",
+    "position": "",
+    "companyName": "",
+    "amount": 385000,
+    "numOfMonths": 19,
+    "address": {
+      "street": "Ulice",
+      "descNumber": 123,
+      "indicativeNumber": 123,
+      "city": "Mersto",
+      "postalCode": 12345
+    },
+    "created": "2022-09-26T09:08:23.518Z",
+    "status": "PENDING",
+    "id": "be485af48f534f2b"
+  },
+  {
+    "applicantType": "INDIVIDUAL",
+    "name": "Petr",
+    "surname": "Novák",
+    "birthNum": "123456789",
+    "nationality": "cz",
+    "email": "roman.schmid@seznam.cz",
+    "phone": "+420546132",
+    "IC": "",
+    "position": "",
+    "companyName": "",
+    "amount": 5000,
+    "numOfMonths": 6,
+    "address": {
+      "street": "Ulice",
+      "descNumber": 131,
+      "indicativeNumber": 123,
+      "city": "mesto",
+      "postalCode": 123456
+    },
+    "created": "2022-09-26T09:25:27.749Z",
+    "status": "PENDING",
+    "id": "4f7c35d5eb24e7b2"
+  },
+  {
+    "applicantType": "INDIVIDUAL",
+    "name": "Petr",
+    "surname": "Novák",
+    "birthNum": "",
+    "nationality": "",
+    "email": "roman.schmid@seznam.cz",
+    "phone": "+420",
+    "IC": "",
+    "position": "",
+    "companyName": "",
+    "amount": 665000,
+    "numOfMonths": 40,
+    "address": {
+      "street": ""
+    },
+    "created": "2022-09-26T11:17:42.665Z",
+    "status": "PENDING",
+    "id": "f14b896219682af9"
+  },
+  {
+    "applicantType": "INDIVIDUAL",
+    "name": "Petr",
+    "surname": "Novák",
+    "birthNum": "",
+    "nationality": "",
+    "email": "roman.schmid@seznam.cz",
+    "phone": "+420",
+    "IC": "",
+    "position": "",
+    "companyName": "",
+    "amount": 660000,
+    "numOfMonths": 40,
+    "address": {
+      "street": ""
+    },
+    "created": "2022-09-26T11:18:10.380Z",
+    "status": "PENDING",
+    "id": "83ce3269cea8df49"
   }
-  ]
+]

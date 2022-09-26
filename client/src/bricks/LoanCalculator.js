@@ -153,7 +153,7 @@ function LoanCalculator() {
                     <Button className={styles.button} 
                             onClick={() => {
                                 handleSubmit();
-                                navigate("../requestForm")}
+                                navigate("/requestForm")}
                             }
                     >SJEDNEJTE SI PŮJČKU!</Button>
                 </div>}

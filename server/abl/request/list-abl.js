@@ -28,7 +28,8 @@ async function ListAbl(req, res) {
             created: el.created,
             name: el.name,
             surname: el.surname,
-            companyName: el.companyName
+            companyName: el.companyName,
+            applicantType: el.applicantType
         }))
 
         res.json(result);
