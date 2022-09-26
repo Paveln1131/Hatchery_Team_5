@@ -10,6 +10,7 @@ export default function RequestForm() {
     const phoneRegex = "[0-9 +]+";
 
     const { calculatorData } = useContext(UserContext);
+    console.log(calculatorData);
 
     if (calculatorData.amount) {
         sessionStorage.setItem("calculatorData", JSON.stringify(calculatorData));
@@ -89,7 +90,7 @@ export default function RequestForm() {
 
         const payload = {...formData}
         
-        Object.keys(payload).forEach(key => {
+/*         Object.keys(payload).forEach(key => {
             if (payload[key] === '') {
                 delete payload[key];
             }
@@ -99,7 +100,7 @@ export default function RequestForm() {
             if (payload.address[key] === '') {
                 delete payload.address[key];
             }
-        });
+        }); */
 
         console.log(payload);
 
@@ -190,6 +191,7 @@ export default function RequestForm() {
                         type="text"
                         value={formData.birthNum}
                         onChange={(e) => setInputField("birthNum", e.target.value)}
+                        required
                     />
                     <Form.Control.Feedback type="invalid">
                         Zadejte Vaše rodné číslo
@@ -233,6 +235,7 @@ export default function RequestForm() {
                         type="text"
                         value={formData.IC}
                         onChange={(e) => setInputField("IC", e.target.value)}
+                        required
                     />
                     <Form.Control.Feedback type="invalid">
                         Zadejte Vaše IČO
@@ -297,6 +300,7 @@ export default function RequestForm() {
                     type="text"
                     value={formData.nationality}
                     onChange={(e) => setInputField("nationality", e.target.value)}
+                    required
                 />
                 <Form.Control.Feedback type="invalid">
                     Zadejte Vaší státní příslušnost
@@ -325,6 +329,7 @@ export default function RequestForm() {
                     value={formData.phone}
                     onChange={(e) => setInputField("phone", e.target.value)}
                     pattern={phoneRegex}
+                    required
                 />
                 <Form.Control.Feedback type="invalid">
                     Zadejte Váše telefonní číslo
@@ -345,6 +350,7 @@ export default function RequestForm() {
                     type="text"
                     value={formData.address.street}
                     onChange={(e) => setAddressInputField("street", e.target.value)}
+                    required
                 />
                 <Form.Control.Feedback type="invalid">
                     Zadejte ulici
@@ -358,6 +364,7 @@ export default function RequestForm() {
                     type="text"
                     value={formData.address.descNumber}
                     onChange={(e) => setAddressInputField("descNumber", parseInt(e.target.value))}
+                    required
                 />
                 <Form.Control.Feedback type="invalid">
                     Zadejte číslo popisné
@@ -371,6 +378,7 @@ export default function RequestForm() {
                     type="text"
                     value={formData.address.indicativeNumber}
                     onChange={(e) => setAddressInputField("indicativeNumber", parseInt(e.target.value))}
+                    required
                 />
                 <Form.Control.Feedback type="invalid">
                     Zadejte číslo orientační
@@ -384,6 +392,7 @@ export default function RequestForm() {
                     type="text"
                     value={formData.address.city}
                     onChange={(e) => setAddressInputField("city", e.target.value)}
+                    required
                 />
                 <Form.Control.Feedback type="invalid">
                     Zadejte město
@@ -397,6 +406,7 @@ export default function RequestForm() {
                     type="text"
                     value={formData.address.postalCode}
                     onChange={(e) => setAddressInputField("postalCode", parseInt(e.target.value))}
+                    required
                 />
                 <Form.Control.Feedback type="invalid">
                     Zadejte poštovní směrovací číslo
