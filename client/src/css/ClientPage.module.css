@@ -1,7 +1,7 @@
 :root {
     --primary-color: rgb(0, 132, 61);
     --secondary-color: rgb(255, 255, 255);
-    --terciary-color: rgb(194, 255, 222);
+    --terciary-color: rgb(219, 46, 33);
 }
   
 * {
@@ -99,7 +99,7 @@ h3 {
 }
 
 .cancelled {
-    background-color: red;
+    background-color: var(--terciary-color);
 }
 
 .sectionHeading::after {
@@ -109,7 +109,7 @@ h3 {
     display: inline-block;
     margin-bottom: 0.2em;
     margin-left: 30px;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--terciary-color);
 }
 
 .sectionHeading::before {
@@ -119,5 +119,5 @@ h3 {
     display: inline-block;
     margin-bottom: 0.2em;
     margin-right: 30px;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--terciary-color);
 }

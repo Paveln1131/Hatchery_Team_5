@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Button, Form, Alert } from 'react-bootstrap';
+import { Button, Form, Alert, InputGroup } from 'react-bootstrap';
 import styles from "../css/RequestForm.module.css"
 import UserContext from "../UserProvider";
 import { useNavigate } from 'react-router-dom';
@@ -7,14 +7,11 @@ import { useNavigate } from 'react-router-dom';
 export default function RequestForm() {
     const navigate = useNavigate();
 
-    const phoneRegex = "[0-9 +]+";
+    const phoneRegex = "[0-9]{9}";
+    const ICRegex = "[0-9]{8}";
+    const birthNumRegex = "[0-9/]{9,11}"
 
     const { calculatorData } = useContext(UserContext);
-    console.log(calculatorData);
-
-    if (calculatorData.amount) {
-        sessionStorage.setItem("calculatorData", JSON.stringify(calculatorData));
-    }
 
     const defaultForm = {
         applicantType: "",
@@ -27,8 +24,8 @@ export default function RequestForm() {
         IC: "",
         position: "",
         companyName: "",
-        amount: "",
-        numOfMonths: "",
+        amount: calculatorData.amount,
+        numOfMonths: calculatorData.numOfMonths,
         address: {
             street: "",
             descNumber: "",
@@ -44,15 +41,6 @@ export default function RequestForm() {
     const [requestAddCall, setRequestAddCall] = useState({
         state: "inactive",
     })
-
-    const setCalculatorData = () => {
-        const dataFromSessionStorage = JSON.parse(sessionStorage.getItem("calculatorData"));
-        const newData = {...formData};
-        newData.amount = dataFromSessionStorage.amount;
-        newData.numOfMonths = dataFromSessionStorage.numOfMonths;
-
-        return setFormData(newData);
-    }
 
     const setInputField = (key, value) => {
         const newData = {...formData};
@@ -77,32 +65,17 @@ export default function RequestForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        if (formData.phone) {
+            formData.phone = formData.phone.replaceAll(' ', '');
+        }
+        
         const form = e.currentTarget;
 
         if (!form.checkValidity()) {
             setValidated(true);
         }
 
-        setCalculatorData();
-        if (formData.phone) {
-            formData.phone = formData.phone.replaceAll(' ', '');
-        }
-
         const payload = {...formData}
-        
-/*         Object.keys(payload).forEach(key => {
-            if (payload[key] === '') {
-                delete payload[key];
-            }
-          });
-
-        Object.keys(payload.address).forEach(key => {
-            if (payload.address[key] === '') {
-                delete payload.address[key];
-            }
-        }); */
-
-        console.log(payload);
 
         setRequestAddCall({ state: "pending" });
         fetch("/request/create", {
@@ -113,7 +86,6 @@ export default function RequestForm() {
             body: JSON.stringify(payload)
         }).then(async (response) => {
             const responseJson = await response.json();
-            console.log(responseJson);
             if (response.status >= 400) {
                 setRequestAddCall({ state: "error", error: responseJson});        
             } else {
@@ -147,7 +119,13 @@ export default function RequestForm() {
                     }}
                     required
                 >
-                    <option>--- Vyberte typ subjektu ---</option>
+                    <option 
+                        value="" 
+                        disabled
+                        hidden
+                    >
+                        --- Vyberte typ subjektu ---
+                    </option>
                     <option value="INDIVIDUAL">Fyzická osoba</option>
                     <option value="OSVC">Podnikající fyzická osoba</option>
                     <option value="LEGAL_ENTITY">Právnická osoba</option>
@@ -190,7 +168,9 @@ export default function RequestForm() {
                         className={styles.input}
                         type="text"
                         value={formData.birthNum}
-                        onChange={(e) => setInputField("birthNum", e.target.value)}
+                        onChange={(e) => setInputField("birthNum", e.target.value.trim())}
+                        maxLength={11}
+                        pattern={birthNumRegex}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -206,7 +186,9 @@ export default function RequestForm() {
                         className={styles.input}
                         type="text"
                         value={formData.IC}
-                        onChange={(e) => setInputField("IC", e.target.value)}
+                        onChange={(e) => setInputField("IC", e.target.value.trim())}
+                        pattern={ICRegex}
+                        maxLength={8}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -234,7 +216,9 @@ export default function RequestForm() {
                         className={styles.input}
                         type="text"
                         value={formData.IC}
-                        onChange={(e) => setInputField("IC", e.target.value)}
+                        onChange={(e) => setInputField("IC", e.target.value.trim())}
+                        pattern={ICRegex}
+                        maxLength={8}
                         required
                     />
                     <Form.Control.Feedback type="invalid">
@@ -323,17 +307,21 @@ export default function RequestForm() {
 
             <Form.Group className={styles.inputGroup}>
                 <Form.Label className={styles.label}>Telefon</Form.Label>
-                <Form.Control
-                    className={styles.input}
-                    type="text"
-                    value={formData.phone}
-                    onChange={(e) => setInputField("phone", e.target.value)}
-                    pattern={phoneRegex}
-                    required
-                />
-                <Form.Control.Feedback type="invalid">
-                    Zadejte Váše telefonní číslo
-                </Form.Control.Feedback>
+                <InputGroup>
+                <InputGroup.Text>+420</InputGroup.Text>
+                    <Form.Control
+                        className={styles.input}
+                        type="text"
+                        value={formData.phone}
+                        onChange={(e) => setInputField("phone", e.target.value.trim())}
+                        pattern={phoneRegex}
+                        maxLength={9}
+                        required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        Zadejte Váše telefonní číslo
+                    </Form.Control.Feedback>
+                </InputGroup>
             </Form.Group>
 
             <div className={styles.inputDivider}>
@@ -419,7 +407,7 @@ export default function RequestForm() {
             >
                 ODESLAT ŽÁDOST
             </Button>
-            { requestAddCall.error ? <Alert variant='danger'>{requestAddCall.error.errorMessage}</Alert> : null }
+            { requestAddCall.error ? <Alert variant='danger'>Chybně vyplněné číslo popisné</Alert> : null }
         </Form>
     </div>
   )

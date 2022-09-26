@@ -1,38 +1,61 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import UserContext from "../UserProvider";
 
 import styles from "../css/ClientPage.module.css"
 
 export default function ClientPage() {
-    const { calculatorData } = useContext(UserContext);
-    console.log(calculatorData)
     const [clientData, setClientData] = useState({
+        state: "pending",
+    })
+    const [calculateData, setCalculateData] = useState({
         state: "pending",
     })
 
     const { id } = useParams();
 
-    console.log(id);
-
     useEffect(() => {
-        fetch(`/request/${id}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(async (response) => {
-            const responseJson = await response.json();
-            console.log(responseJson);
-            if (response.status >= 400) {
-                setClientData({ state: "error", error: responseJson});        
+        const clientData = async () => {
+
+            const res = await fetch(`/request/${id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+            const data = await res.json();
+            if (res.status >= 400) {
+                setClientData({ state: "error", error: data});        
             } else {
-                setClientData({ state: "success", data: responseJson});
+                setClientData({ state: "success", data: data});
             }
-        })
+        }
+
+        clientData();
     }, [id])
 
-    if (clientData.state === "pending") {
+    useEffect(() => {
+        const calculate = async () => {
+          
+            const payload = {
+                amount: clientData.data.amount,
+                numOfMonths: clientData.data.numOfMonths
+            }
+           
+            const res = await fetch('http://localhost:3000/request/calculate', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload)
+            });
+            const data = await res.json();
+            setCalculateData({ state: "success", data: data});
+        }
+
+        calculate();
+    }, [clientData.data])
+
+    if (calculateData.state === "pending") {
         return <h2>Načítá se stav Vaší žádosti...</h2>;
     }
 
@@ -211,7 +234,7 @@ export default function ClientPage() {
                     <h4>Výše úvěru:</h4>
                 </div>
                 <div className={`${styles.rightSide} ${styles.primaryBg}`}>
-                    <h4>{clientData.data.amount} Kč</h4>
+                    <h4>{clientData.data.amount.toLocaleString('cs')} Kč</h4>
                 </div>
             </div>
 
@@ -221,6 +244,51 @@ export default function ClientPage() {
                 </div>
                 <div className={`${styles.rightSide} ${styles.primaryBg}`}>
                     <h4>{clientData.data.numOfMonths} měsíců</h4>
+                </div>
+            </div>
+
+            <div className={styles.clientData}>
+                <div className={`${styles.leftSide} ${styles.secondaryBg}`}>
+                    <h4>Měsíční splátka:</h4>
+                </div>
+                <div className={`${styles.rightSide} ${styles.primaryBg}`}>
+                    <h4>{calculateData.data.monthlyPayment.toLocaleString('cs')} Kč</h4>
+                </div>
+            </div>
+
+            <div className={styles.clientData}>
+                <div className={`${styles.leftSide} ${styles.secondaryBg}`}>
+                    <h4>Úrok:</h4>
+                </div>
+                <div className={`${styles.rightSide} ${styles.primaryBg}`}>
+                    <h4>{calculateData.data.yearlyInterest}%</h4>
+                </div>
+            </div>
+
+            <div className={styles.clientData}>
+                <div className={`${styles.leftSide} ${styles.secondaryBg}`}>
+                    <h4>RPSN:</h4>
+                </div>
+                <div className={`${styles.rightSide} ${styles.primaryBg}`}>
+                    <h4>{calculateData.data.RPSN}%</h4>
+                </div>
+            </div>
+
+            <div className={styles.clientData}>
+                <div className={`${styles.leftSide} ${styles.secondaryBg}`}>
+                    <h4>Fixní poplatek:</h4>
+                </div>
+                <div className={`${styles.rightSide} ${styles.primaryBg}`}>
+                    <h4>{calculateData.data.fixedFee.toLocaleString('cs')} Kč</h4>
+                </div>
+            </div>
+
+            <div className={styles.clientData}>
+                <div className={`${styles.leftSide} ${styles.secondaryBg}`}>
+                    <h4>Celková částka ke splacení:</h4>
+                </div>
+                <div className={`${styles.rightSide} ${styles.primaryBg}`}>
+                    <h4>{calculateData.data.overallAmount.toLocaleString('cs')} Kč</h4>
                 </div>
             </div>
 
@@ -236,11 +304,10 @@ export default function ClientPage() {
                 ? <div className={`${styles.statusBar} ${styles.approved}`}>Schváleno</div>
                 : null
             }
-            { clientData.data.status === "CANCELLED "
+            { clientData.data.status === "CANCELLED"
                 ? <div className={`${styles.statusBar} ${styles.cancelled}`}>Zamítnuto</div>
                 : null
             }
-            
         </div>
     )
 }

@@ -10,9 +10,6 @@ import base64 from 'base-64'
 import React, { useState, useContext } from 'react';
 import UserContext from "./UserProvider";
 
-/* import RequestForm from './bricks/RequestForm';
-import LoanCalculator from './bricks/LoanCalculator';
-import RequestList from './bricks/RequestList'; */
 
 function App() {
   const navigate = useNavigate();
@@ -49,15 +46,11 @@ function App() {
     e.preventDefault();
 
     const form = e.currentTarget;
-    /* console.log(form); */
     if (!form.checkValidity()) {
       setValidated(true);
     }
 
     setLoginCall({ state: "pending" });
-/*     console.log(loginCall.state)
-    console.log(formateLoginData(loginData.login, loginData.password))
-    console.log(base64.encode(formateLoginData(loginData.login, loginData.password))) */
 
     fetch("/login", {
       method: "GET",
@@ -71,8 +64,6 @@ function App() {
         setLoginCall({ state: "error", error: responseJson});
       } else {
         setLoginCall({ state: "success", data: responseJson});
-        /* console.log(responseJson)
-        console.log(loginCall) */
         toggleAuthorization(responseJson.roles)
         setLoginData(defaultLoginData);
         handleCloseLoginModal();
@@ -93,8 +84,6 @@ function App() {
   const navigateHome = () => {
     navigate("/");
   }
-
-  /* console.log(authorization); */
 
   return (
     <div className="App">
@@ -195,9 +184,6 @@ function App() {
           </Modal.Footer>
         </Form>
       </Modal>
-
-      {/* { !authorization[0] ? <LoanCalculator></LoanCalculator> : <RequestList></RequestList> } */}
-
 
       <Outlet />
     </div>
