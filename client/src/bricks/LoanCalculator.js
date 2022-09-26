@@ -5,8 +5,9 @@ import UserContext from "../UserProvider";
 import styles from "../css/LoanCalculator.module.css"
 
 
-/*  od částky vyšší než 200 000 skákat po 5000, mezery mezi částky po 3 nulách a let že není potřeba počt let vidět, počet msíců a sjednat půjčku tlačítko atraktivnější*/
 function LoanCalculator() {
+
+// Navigation
   const navigate = useNavigate();
   const { collectDataFromCalculator } = useContext(UserContext);
 
@@ -25,9 +26,7 @@ function LoanCalculator() {
     // states for results
     const [results, setResults] = useState({})
 
-    // Fetch method for calculation
-
-    
+    // Fetch method for calculation  
     useEffect(() => {
         async function calculate() {
           
@@ -51,13 +50,34 @@ function LoanCalculator() {
       
     }, [amountSlider, numofMonthsSlider])
 
+    // function for submitting 
     const handleSubmit = () => {
         collectDataFromCalculator(amountSlider, numofMonthsSlider, results)
+      
     }
-
+   
+    // function to show results and validate values
+    const showResults = () => {
+        setShow(!show)
+        if(amountSlider < 5000) {
+            setShow(show)
+            alert("Minimální výše půjčky musí být 5 000 Kč!")
+        } else if(amountSlider > 1200000) {
+            setShow(show)
+            alert("Maximální výše půjčky musí být 1 200 000 Kč!")
+        }
+        if(numofMonthsSlider < 6) {
+            setShow(show)
+            alert("Minimální doba splatnosti je 6 měsíců!")
+        } else if(numofMonthsSlider > 60) {
+            setShow(show)
+            alert("Maximální doba splatnosti je 60 měsíců!")
+        }
+    }
 
     return (
 
+// Rendering the calculator container 
         <Container className={styles.card}>
         <div>
             <div>
@@ -68,26 +88,26 @@ function LoanCalculator() {
                     <Form.Label>Výše úvěru: </Form.Label>
                     <div className={styles.loan}> {amountSlider.toLocaleString()} Kč</div>
                     <Form.Range
+                        type="range"
                         min={minAmount}
                         max={maxAmount}
-                        step= {amountSlider < 200000 ? "1000" : "5000"}
+                        step= {amountSlider < 199000 ? "1000" : "5000"}
                         value={amountSlider}
                         onChange={e => setAmountSlider(Number(e.target.value))}
-                        className={styles.sliders}
                         required/>
 
-                  <Form.Label>Zadejte výši částky ručně: </Form.Label>
+                  <Form.Label className={styles.textarea}>Zadejte výši částky ručně: </Form.Label>
                    <Form.Control
                     type="number"
                         min={minAmount}
                         max={maxAmount}
-                        step= {amountSlider < 200000 ? "1000" : "5000"}
+                        step= {amountSlider < 199000 ? "1000" : "5000"}
                         value={amountSlider}
                         onChange={e => setAmountSlider(Number(e.target.value))}
                         required/>
                     
                             <Col className={styles.loanMinimum}>Minimální výše půjčky: {minAmount.toLocaleString()} Kč</Col>
-                            <Col className={styles.loanMinimum}>Maximální výše půjčky: {maxAmount.toLocaleString()} Kč</Col>     
+                            <Col className={styles.loanMinimum}>Maximální výše půjčky: {maxAmount.toLocaleString()} Kč</Col> 
                 </Form.Group>
             </Container>
             
@@ -95,6 +115,7 @@ function LoanCalculator() {
                     <Form.Label>Doba splácení: </Form.Label>
                     <div className={styles.loan}>{numofMonthsSlider} měsíců</div>
                     <Form.Range
+                        className={styles.monthSlider}
                         min={minnumOfMonths}
                         max={maxnumOfMonths}
                         value={numofMonthsSlider}
@@ -103,11 +124,11 @@ function LoanCalculator() {
                         }}
                         required/>
 
-                <Form.Label>Zadejte počet měsíců ručně: </Form.Label>
+                <Form.Label className={styles.textarea}>Zadejte počet měsíců ručně: </Form.Label>
                 <Form.Control
                     type="number"
                     min={minnumOfMonths}
-                    max={maxnumOfMonths}
+                    max={minnumOfMonths}
                     value={numofMonthsSlider}
                     onChange={e => setNumOfMonthsSlider(Number(e.target.value))}
                         required/>
@@ -116,11 +137,11 @@ function LoanCalculator() {
                             <Col className={styles.loanMinimum}>Maximální počet měsíců: {maxnumOfMonths}</Col>
                        
                 </Form.Group>
-                <Button onClick={() => setShow(!show)} className={styles.button}>
+                <Button onClick={showResults} className={styles.button}>
                {show === true ? "Schovat výsledky" : "Ukázat výsledky"}
             </Button>
-           
-             
+
+
         {show && <div>
                     <div>Měsíční splátka: {results.monthlyPayment.toLocaleString()} Kč</div>
                     <div>Úrok: {results.yearlyInterest}%</div>
@@ -134,18 +155,11 @@ function LoanCalculator() {
                                 handleSubmit();
                                 navigate("../requestForm")}
                             }
-                    >Odeslat</Button>
+                    >SJEDNEJTE SI PŮJČKU!</Button>
                 </div>}
-                
-           
-
-    
-            
         </div>
         </Container>
     )
 }
-
-
 
 export default LoanCalculator;
