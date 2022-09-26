@@ -70,6 +70,7 @@
     "status": "PENDING",
     "id": "wiVXhN73fR",
     "created": "Sat Sep 17 2022 19:31:42 GMT+0200"
+<<<<<<< HEAD
   },
   {
     "applicantType": "INDIVIDUAL",
@@ -574,5 +575,7 @@
     "created": "2022-09-25T18:31:18.542Z",
     "status": "PENDING",
     "id": "9f2f226b2ceb5a75"
+=======
+>>>>>>> 1524e45ed992eadcba5e7cd355901d413d9fa459
   }
-]
+  ]

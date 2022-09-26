@@ -58,7 +58,7 @@ function RequestInfoForm({id}){
 
 
     function getModal(){
-            console.log(requestLoadCall.data)
+
         const request = requestLoadCall.data
         let isCompany = requestLoadCall.data.companyName != null
         let isIC = requestLoadCall.data.IC != null
@@ -70,10 +70,10 @@ function RequestInfoForm({id}){
         })
         return (
             <>
-                <Modal show={isModalShown} onHide={handleCloseModal}>
+                <Modal size={"lg"} show={isModalShown} onHide={handleCloseModal}>
                     <Form><Form/>
                         <Modal.Header>
-                            <Modal.Title>Informace o klientovi</Modal.Title>
+                            <Modal.Title><p style={{margin:"0px"}} className={styles.section}>Informace o klientovi</p></Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <div style={{display:"flex",justifyContent:"space-evenly"}} className={"row"}>
@@ -89,11 +89,31 @@ function RequestInfoForm({id}){
                                         <span>{isIC ? request.IC : request.birthNum}</span>
                                     </div>
                                     <div className={"col"}>
+                                        <span className={styles.main}>Národnost</span>
+                                        <br/>
+                                        <span>{request.nationality}</span>
+                                    </div>
+                                    <div className={"col"}>
                                         <span className={styles.main}>{isCompany ? "Právnická osoba" : (isIC ? "Podnikatel fyzická osoba" : "Fyzická osoba")}</span>
                                     </div>
                                 </div>
+                                <div className={"row"}>
+                                    <br/>
+                                </div>
+                                <div className={"row"}>
+                                    <div style={{maxWidth:"190px"}} className={"col"}>
+                                        <span className={styles.main}>{isCompany ? "Jméno žadatele" : ""}</span>
+                                        <br/>
+                                        <span>{isCompany ? (request.name + " " + request.surname) : ""}</span>
+                                    </div>
+                                    <div className={"col"}>
+                                        <span className={styles.main}>{isCompany ? "Pozice žadatele" : ""}</span>
+                                        <br/>
+                                        <span>{isCompany ? (request.position) : ""}</span>
+                                    </div>
+                                </div>
                                 <div style={{marginTop:"30px", marginBottom:"30px"}} className={"row"}>
-                                    <h3>Kontakt</h3>
+                                    <p className={styles.section}>Kontaktní údaje</p>
                                 </div>
                                 <div className={"row"}>
                                     <div className={"col"}>
@@ -114,7 +134,7 @@ function RequestInfoForm({id}){
                                 </div>
                                 <div className={"row"}>
                                     <div style={{marginTop:"30px", marginBottom:"30px"}} className={"row"}>
-                                        <h3>Informace o žádosti</h3>
+                                        <p className={styles.section}>Informace o žádosti</p>
                                     </div>
                                     <div className={"col"}>
                                         <span className={styles.main}>Typ žádosti</span>
@@ -129,7 +149,12 @@ function RequestInfoForm({id}){
                                     <div className={"col"}>
                                         <span className={styles.main}>Výše půjčky</span>
                                         <br/>
-                                        <span>{request.amount}</span>
+                                        <span>{request.amount.toLocaleString() + " Kč"}</span>
+                                    </div>
+                                    <div className={"col"}>
+                                        <span className={styles.main}>Počet splátek</span>
+                                        <br/>
+                                        <span>{request.numOfMonths}</span>
                                     </div>
                                     <div className={"col"}>
                                         <span className={styles.main}>Status</span>
@@ -138,15 +163,10 @@ function RequestInfoForm({id}){
                                     </div>
                                 </div>
                             </div>
-                            <div className={"row"}>
-                                <div className={"col"}>
-                                    <span className={styles.main}>Status</span>
-                                    <br/>
-                                    <span>{request.status}</span>
-                                </div>
-                            </div>
                         </Modal.Body>
                         <Modal.Footer>
+                                <Button variant="outline-danger me-auto">Zamítnout</Button>
+                                <Button variant="outline-success">Potvrdit</Button>
                         </Modal.Footer>
                     </Form>
                 </Modal>
