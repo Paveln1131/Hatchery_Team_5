@@ -115,4 +115,11 @@
 .main{
     font-weight: bold;
 }
+.section{
+color: rgb(0, 132, 61);
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
 

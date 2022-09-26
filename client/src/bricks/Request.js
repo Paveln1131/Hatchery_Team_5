@@ -2,12 +2,26 @@ import styles from './requestList.module.css'
 import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import RequestInfoForm from "./RequestInfoForm";
+import {useEffect, useState} from "react";
 
 
 function Request({requestList}) {
 
+    const [ok,setOk] = useState(false)
+
     let i = 0;
 
+    const checkBoxMap = new Map()
+
+    requestList.map((request) => {
+        checkBoxMap.set(request.id,false)
+    })
+    const handleCheck = (id) => {
+        checkBoxMap.set(id,(!checkBoxMap.get(id)))
+        setOk(!ok)
+        console.log(checkBoxMap)
+
+    }
 
     return (
         <div className={styles.container}>
@@ -32,6 +46,7 @@ function Request({requestList}) {
                     <tbody>
                     {requestList.map((request) => {
 
+                        console.log(checkBoxMap.get(request.id))
                         let dateOfCreation = new Date(request.created).toLocaleDateString('cz', {
                             year: "numeric",
                             month: "short",
@@ -42,14 +57,17 @@ function Request({requestList}) {
                             <tr key={request.id}>
                                 <th scope="row">
                                     <Form>
-                                        <Form.Check aria-label="option 1"/>
+                                        <Form.Check
+                                            onClick={(e)=>{handleCheck(request.id)}}
+
+                                            aria-label="option 1"/>
                                     </Form>
                                 </th>
                                 <td className={styles.appNumber}>{i}</td>
                                 <td className={styles.appName}>{request.companyName ?? (request.name + " " + request.surname)}</td>
                                 <td className={styles.appDate}>{dateOfCreation}</td>
                                 <td className={styles.appNumOfMonths}>{request.numOfMonths}</td>
-                                <td className={styles.appLoanAmount}>{request.amount}</td>
+                                <td className={styles.appLoanAmount}>{request.amount.toLocaleString() + " Kč"}</td>
                                 <td className={styles.appStatus}>{request.status}</td>
                                 <td className={styles.appEdit}>
                                     <RequestInfoForm id={request.id}/>
