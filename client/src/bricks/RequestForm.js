@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Button, Form, Alert } from 'react-bootstrap';
 import styles from "../css/RequestForm.module.css"
 import UserContext from "../UserProvider";
@@ -52,6 +52,12 @@ export default function RequestForm() {
         return setFormData(newData);
     }
 
+    useEffect(() => {
+        if (requestAddCall.state === "success") {
+            navigate("/clientPage/" + requestAddCall.data.id);
+        }
+    }, [requestAddCall, navigate])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         /* formData.phone.replaceAll(' ', ''); */
@@ -75,13 +81,11 @@ export default function RequestForm() {
             const responseJson = await response.json();
             console.log(responseJson);
             if (response.status >= 400) {
-                setRequestAddCall({ state: "error", error: responseJson});
+                setRequestAddCall({ state: "error", error: responseJson});        
             } else {
                 setRequestAddCall({ state: "success", data: responseJson});
             }
         });
-
-        
     }
 
   return (
