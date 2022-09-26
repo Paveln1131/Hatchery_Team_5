@@ -4,8 +4,9 @@ import {mdiLoading} from "@mdi/js";
 import styles from './requestList.module.css'
 import {Form, Modal} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import EvaluateRequest from "./EvaluateRequest";
 
-function RequestInfoForm({id}){
+function RequestInfoForm(props){
 
     const [requestLoadCall, setRequestLoadCall] = useState({
         state: "pending"
@@ -19,7 +20,11 @@ function RequestInfoForm({id}){
     }
 
     useEffect(() => {
-        fetch(`http://localhost:3000/request/${id}`, {
+        onRefresh()
+    }, []);
+
+    function onRefresh(){
+        fetch(`http://localhost:3000/request/${props.id}`, {
             method: "GET",
             headers:{
                 Authorization: 'Bearer '+'qdsMkMpb16'
@@ -32,7 +37,8 @@ function RequestInfoForm({id}){
                 setRequestLoadCall({ state: "success", data: responseJson });
             }
         });
-    }, []);
+        props.onRefres()
+    }
 
 
         switch (requestLoadCall.state) {
@@ -165,8 +171,7 @@ function RequestInfoForm({id}){
                             </div>
                         </Modal.Body>
                         <Modal.Footer>
-                                <Button variant="outline-danger me-auto">Zamítnout</Button>
-                                <Button variant="outline-success">Potvrdit</Button>
+                                <EvaluateRequest id={request.id} onRefresh = {onRefresh}></EvaluateRequest>
                         </Modal.Footer>
                     </Form>
                 </Modal>
