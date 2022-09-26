@@ -18,6 +18,13 @@
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 14px 40px;
+    border: solid 1px rgb(0, 132, 61);
+}
+
+.button:hover {
+  background-color: white !important;
+  color: rgb(0, 132, 61) !important;
+  border: solid 1px rgb(0, 132, 61) !important;
 }
 
 /* Styling for texts */
@@ -49,7 +56,6 @@ input[type="range"] {
     height: 7px;
     background: grey;
     border-radius: 5px;
-    background-image: grey;
     background-repeat: no-repeat;
   }
   
@@ -70,6 +76,7 @@ input[type="range"] {
     border: none;
     background: transparent;
   }
+
   
   input[type="range"]::-webkit-slider-thumb:hover {
     box-shadow: #d46a6a50 0px 0px 0px 8px;
