@@ -54,6 +54,21 @@ function LoanCalculator() {
     const handleSubmit = () => {
         collectDataFromCalculator(amountSlider, numofMonthsSlider, results)
       
+        if(amountSlider < 5000) {
+            alert("Minimální výše půjčky musí být 5 000 Kč!")
+            window.location.reload()
+       
+        } else if(amountSlider > 1200000) {
+            alert("Maximální výše půjčky musí být 1 200 000 Kč!")
+            window.location.reload()
+        }
+        if(numofMonthsSlider < 6) {
+            alert("Minimální doba splatnosti je 6 měsíců!")
+            window.location.reload()
+        } else if(numofMonthsSlider > 60) {
+            alert("Maximální doba splatnosti je 60 měsíců!")
+            window.location.reload()
+        }
     }
    
     // function to show results and validate values
@@ -75,9 +90,10 @@ function LoanCalculator() {
         }
     }
 
+
+    // Rendering the calculator container 
     return (
 
-// Rendering the calculator container 
         <Container className={styles.card}>
         <div>
             <div>
@@ -131,7 +147,7 @@ function LoanCalculator() {
                     max={minnumOfMonths}
                     value={numofMonthsSlider}
                     onChange={e => setNumOfMonthsSlider(Number(e.target.value))}
-                        required/>
+                    required/>
                     
                             <Col className={styles.loanMinimum}>Minimální počet měsíců: {minnumOfMonths}</Col>
                             <Col className={styles.loanMinimum}>Maximální počet měsíců: {maxnumOfMonths}</Col>
@@ -154,9 +170,10 @@ function LoanCalculator() {
                             onClick={() => {
                                 handleSubmit();
                                 navigate("/requestForm")}
+                            
                             }
                     >SJEDNEJTE SI PŮJČKU!</Button>
-                </div>}
+                </div>} 
         </div>
         </Container>
     )
