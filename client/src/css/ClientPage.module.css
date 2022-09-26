@@ -1,6 +1,7 @@
 :root {
     --primary-color: rgb(0, 132, 61);
     --secondary-color: rgb(255, 255, 255);
+    --terciary-color: rgb(194, 255, 222);
 }
   
 * {
@@ -20,7 +21,7 @@ h2 {
     font-size: 1.9rem;
 }
 
-.inputSection {
+.clientDataSection {
     color: var(--primary-color);
     font-weight: 700;
     font-size: 1.4rem;
@@ -37,30 +38,6 @@ h3 {
     font-size: 1.3rem;
     max-width: 200px;
     position: relative;
-}
-
-h3:before {
-    content: "";
-    display: block;
-    width: 120px;
-    height: 2px;
-    background: var(--primary-color);
-    left: 100px;
-    top: 50%;
-    position: absolute;
-    z-index: -1;
-}
-
-h3:after {
-    content: "";
-    display: block;
-    width: 120px;
-    height: 2px;
-    background: var(--primary-color);
-    right: 100px;
-    top: 50%;
-    position: absolute;
-    z-index: -1;
 }
 
 .clientData {
@@ -84,6 +61,63 @@ h3:after {
     padding-left: 10px;
 }
 
-.rightSide h4 {
-    color: var(--secondary-color)
+.primaryBg {
+    background-color: var(--primary-color);
+}
+
+.primaryBg h4 {
+    color: var(--secondary-color);
+}
+
+.secondaryBg {
+    background-color: var(--secondary-color);
+}
+
+.secondaryBg h4 {
+    color: var(--primary-color)
+}
+
+.statusBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 50px;
+    width: 200px;
+    margin: 0 auto;
+    margin-bottom: 100px;
+    color: var(--secondary-color);
+    font-weight: 700;
+}
+
+.pending {
+    background-color: rgb(206, 134, 2);
+}
+
+.approved {
+    background-color: var(--primary-color);
+}
+
+.cancelled {
+    background-color: red;
+}
+
+.sectionHeading::after {
+    content: "";
+    width: 70px;
+    height: 2px;
+    display: inline-block;
+    margin-bottom: 0.2em;
+    margin-left: 30px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.sectionHeading::before {
+    content: "";
+    width: 70px;
+    height: 2px;
+    display: inline-block;
+    margin-bottom: 0.2em;
+    margin-right: 30px;
+    border-bottom: 2px solid var(--primary-color);
 }

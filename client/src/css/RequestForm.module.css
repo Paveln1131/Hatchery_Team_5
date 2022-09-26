@@ -32,49 +32,51 @@ h4 {
 }
 
 .inputSection {
-    width: 30px;
-    height: 30px;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
+    color: var(--primary-color);
     font-weight: 700;
     font-size: 1.4rem;
-    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 40px;
+    margin-bottom: 20px;
 }
 
-h3 {
-    margin: 0 auto;
-    text-align: center;
-    font-size: 1.3rem;
-    max-width: 60px;
-    position: relative;
+.inputDivider {
+    margin-top: 40px;
 }
 
-h3:before {
+.inputDivider::before {
     content: "";
-    display: block;
-    width: 180px;
+    width: 100px;
     height: 2px;
-    background: var(--primary-color);
-    left: 30px;
-    top: 50%;
-    position: absolute;
-    z-index: -1;
+    display: inline-block;
+    margin-bottom: 0.2em;
+    margin-right: 30px;
+    border-bottom: 2px solid var(--primary-color);
 }
 
-h3:after {
+.inputDivider::after {
     content: "";
-    display: block;
-    width: 180px;
+    width: 100px;
     height: 2px;
-    background: var(--primary-color);
-    right: 30px;
-    top: 50%;
-    position: absolute;
-    z-index: -1;
+    display: inline-block;
+    margin-bottom: 0.2em;
+    margin-left: 30px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.sectionNumber {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+    font-weight: 700;
 }
 
 .inputGroup {
