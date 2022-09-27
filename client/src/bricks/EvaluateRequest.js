@@ -35,6 +35,7 @@ function EvaluateRequest(props) {
         } else {
             for (const [key, value] of Object.entries(props.checkBoxMap)) {
                 if (value) {
+                    if (checkApplicationStatus(key))
                     await rejectRequest(key)
                 }
             }
@@ -67,11 +68,15 @@ function EvaluateRequest(props) {
 
     async function approveRequests() {
         if (props.id) {
-            await approveRequest(props.id)
+            if (checkApplicationStatus(props.id)) {
+                await approveRequest(props.id)
+            }
         } else {
             for (const [key, value] of Object.entries(props.checkBoxMap)) {
                 if (value) {
-                    await approveRequest(key)
+                    if (checkApplicationStatus(key)){
+                        await approveRequest(key)
+                }
                 }
             }
         }

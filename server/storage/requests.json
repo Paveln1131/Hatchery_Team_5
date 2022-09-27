@@ -19,7 +19,7 @@
       "city": "Duis",
       "postalCode": 11111
     },
-    "status": "CANCELLED",
+    "status": "PENDING",
     "id": "Pm8MtixTFX",
     "created": "Wed Mar 25 2015 01:00:00 GMT+0100"
   },
@@ -91,7 +91,7 @@
       "city": "Totam",
       "postalCode": 777777
     },
-    "status": "CANCELLED",
+    "status": "PENDING",
     "id": "wiVXhN73fR",
     "created": "Sat Sep 17 2022 19:31:42 GMT+0200"
   },
