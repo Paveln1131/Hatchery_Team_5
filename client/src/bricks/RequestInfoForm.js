@@ -171,7 +171,7 @@ function RequestInfoForm(props){
                             </div>
                         </Modal.Body>
                         <Modal.Footer>
-                                <EvaluateRequest id={request.id} onRefresh = {onRefresh}></EvaluateRequest>
+                                <EvaluateRequest requestList={props.requestList} id={request.id} onRefresh = {onRefresh}></EvaluateRequest>
                         </Modal.Footer>
                     </Form>
                 </Modal>

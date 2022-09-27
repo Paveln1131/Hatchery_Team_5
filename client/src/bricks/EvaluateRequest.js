@@ -1,5 +1,6 @@
-import { useState} from "react";
+import {useState} from "react";
 import Button from "react-bootstrap/Button";
+import {Alert} from "react-bootstrap";
 
 function EvaluateRequest(props) {
 
@@ -11,9 +12,40 @@ function EvaluateRequest(props) {
         state: "pending"
     });
 
-    function rejectRequest() {
+    function checkApplicationStatus(id) {
+        console.log(props.requestList)
+        let isPending = false
+        props.requestList.forEach((request) => {
+            if (request.id === id) {
+                if (request.status === "PENDING") {
+                    isPending = true
+                }
+            }
+        })
+        return isPending
+    }
 
-        fetch(`http://localhost:3000/request/${props.id}/cancel`, {
+    async function rejectRequests() {
+        if (props.id) {
+            if (checkApplicationStatus(props.id)) {
+                await rejectRequest(props.id)
+            }else return <Alert key={"primary"} variant={"primary"}>
+                This is a  alert—check it out!
+            </Alert>
+        } else {
+            for (const [key, value] of Object.entries(props.checkBoxMap)) {
+                if (value) {
+                    await rejectRequest(key)
+                }
+            }
+        }
+
+    }
+
+    function rejectRequest(id) {
+
+        console.log(id)
+        let responsePromise = fetch(`http://localhost:3000/request/${id}/cancel`, {
             method: "PUT", headers: {
                 Authorization: 'Bearer ' + 'qdsMkMpb16'
             }
@@ -25,13 +57,29 @@ function EvaluateRequest(props) {
                 setRequestCallReject({state: "success", data: responseJson});
             }
         });
+        if (props.id) {
+            props.onRefresh()
+        } else props.RefreshRequestList()
 
-        props.onRefresh()
+        return responsePromise
     }
 
-    function requestApprove() {
 
-        fetch(`http://localhost:3000/request/${props.id}/approve`, {
+    async function approveRequests() {
+        if (props.id) {
+            await approveRequest(props.id)
+        } else {
+            for (const [key, value] of Object.entries(props.checkBoxMap)) {
+                if (value) {
+                    await approveRequest(key)
+                }
+            }
+        }
+    }
+
+    function approveRequest(id) {
+
+        let responsePromise = fetch(`http://localhost:3000/request/${id}/approve`, {
             method: "PUT", headers: {
                 Authorization: 'Bearer ' + 'qdsMkMpb16'
             }
@@ -43,13 +91,17 @@ function EvaluateRequest(props) {
                 setRequestCallApprove({state: "success", data: responseJson});
             }
         });
-        props.onRefresh()
+        if (props.id) {
+            props.onRefresh()
+        } else props.RefreshRequestList()
+
+        return responsePromise
     }
 
-    return(
+    return (
         <>
-            <Button onClick={rejectRequest} variant="outline-danger me-auto">Zamítnout</Button>
-            <Button onClick={requestApprove} variant="outline-success">Potvrdit</Button>
+            <Button onClick={rejectRequests} variant="outline-danger me-auto">Zamítnout</Button>
+            <Button onClick={approveRequests} variant="outline-success">Potvrdit</Button>
         </>
     )
 }

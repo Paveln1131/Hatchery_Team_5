@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -8,10 +8,11 @@ import HomePage from './routes/HomePage';
 import ClientPage from './routes/ClientPage';
 
 import reportWebVitals from './reportWebVitals';
-import { UserProvider } from './UserProvider';
+import UserContext, { UserProvider } from './UserProvider';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <UserProvider>

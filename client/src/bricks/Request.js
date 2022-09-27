@@ -1,33 +1,62 @@
 import styles from './requestList.module.css'
-import Button from "react-bootstrap/Button";
 import Form from 'react-bootstrap/Form';
 import RequestInfoForm from "./RequestInfoForm";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import EvaluateRequest from "./EvaluateRequest";
 
 
 function Request(props) {
 
-
-    const [ok,setOk] = useState(false)
+    const [checkBoxMap,setCheckBoxMap] = useState({})
 
     let i = 0;
 
-    const checkBoxMap = new Map()
 
-    props.requestList.map((request) => {
-        checkBoxMap.set(request.id,false)
-    })
     const handleCheck = (id) => {
-        checkBoxMap.set(id,(!checkBoxMap.get(id)))
-        setOk(!ok)
-       // console.log(checkBoxMap)
+        let checkBoxMapCopy = {... checkBoxMap}
+        checkBoxMapCopy[id] = !checkBoxMap[id]
+        setCheckBoxMap(checkBoxMapCopy)
 
     }
 
-    const checkBoxList = [];
+    const isAllChecked = () => {
+        let x = 0
+
+        for (const [key, value] of Object.entries(checkBoxMap)) {
+            if (!value){
+                x++
+            }
+        }
+        if (x > 0 || Object.keys(checkBoxMap).length === 0){
+            return true
+        }
+        else return false
+    }
+
+    const handleCheckAll = () => {
+        let checkBoxMapCopy = {... checkBoxMap}
+        let x = 0
+
+        for (const [key, value] of Object.entries(checkBoxMap)) {
+            if (!value){
+                x++
+            }
+        }
+        if (isAllChecked()){
+            props.requestList.forEach((request) => {
+                    checkBoxMapCopy[request.id] = true
+                }
+            )
+        }else {
+            props.requestList.forEach((request) => {
+                    checkBoxMapCopy[request.id] = false
+                }
+            )
+        }
 
 
+        setCheckBoxMap(checkBoxMapCopy)
+    }
 
     return (
         <div className={styles.container}>
@@ -37,7 +66,7 @@ function Request(props) {
                     <tr>
                         <td scope="col" className={styles.appSelect}>
                             <Form>
-                                <Form.Check aria-label="option 1"/>
+                                <Form.Check aria-label="option 1" onChange={handleCheckAll} checked={!isAllChecked()}/>
                             </Form>
                         </td>
                         <td scope="col" className={styles.appNumber}>#</td>
@@ -52,7 +81,6 @@ function Request(props) {
                     <tbody>
                     {props.requestList.map((request) => {
 
-                       // console.log(checkBoxMap.get(request.id))
                         let dateOfCreation = new Date(request.created).toLocaleDateString('cz', {
                             year: "numeric",
                             month: "short",
@@ -65,7 +93,7 @@ function Request(props) {
                                     <Form>
                                         <Form.Check
                                             onClick={(e)=>{handleCheck(request.id)}}
-
+                                            checked={checkBoxMap[request.id]}
                                             aria-label="option 1"/>
                                     </Form>
                                 </th>
@@ -76,7 +104,7 @@ function Request(props) {
                                 <td className={styles.appLoanAmount}>{request.amount.toLocaleString() + " Kč"}</td>
                                 <td className={styles.appStatus}>{request.status}</td>
                                 <td className={styles.appEdit}>
-                                    <RequestInfoForm id={request.id} onRefres={props.onRefresh}/>
+                                    <RequestInfoForm requestList={props.requestList} id={request.id} onRefres={props.onRefresh}/>
                                 </td>
 
                             </tr>
@@ -88,16 +116,8 @@ function Request(props) {
                     </tbody>
                 </table>
                 <footer style={{display:"flex",justifyContent:"space-between",margin:"10px"}}>
-                    {
-                        props.requestList.map((request) => {
-                           // console.log(checkBoxMap.get(request.id))
-                            if (checkBoxMap.get(request.id)){
-                                checkBoxList.push(request.id)
-                            }
 
-                        })
-                    }
-                    <EvaluateRequest id={checkBoxList}></EvaluateRequest>
+                    <EvaluateRequest requestList={props.requestList} checkBoxMap={checkBoxMap} RefreshRequestList={props.onRefresh}></EvaluateRequest>
                 </footer>
             </div>
         </div>

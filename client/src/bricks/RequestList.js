@@ -1,11 +1,13 @@
-import {useEffect, useMemo, useState} from "react";
+import {useContext, useEffect, useMemo, useState} from "react";
 import Icon from "@mdi/react";
 import { mdiLoading } from "@mdi/js";
 import Request from './Request'
 import {Form, FormSelect} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import UserContext from "../UserProvider";
 
 function RequestList(){
+    //const { authorization } = useContext(UserContext);
 
     const [requestListLoadCall, setRequestListLoadCall] = useState({
         state: "pending"
@@ -84,8 +86,7 @@ function RequestList(){
 
 
     function handleSearch(event) {
-        //event.preventDefault();
-        //setSearchBy(event.target["searchInput"].value);
+        setSearchBy(event.target.value);
 
     }
 
@@ -137,6 +138,7 @@ function RequestList(){
                                         aria-label="Search"
                                         style={{width:"max-content"}}
                                     >
+                                        <option value={""}>Typ žadatele</option>
                                         <option value={"INDIVIDUAL"}>Fyzická osoba</option>
                                         <option value={"OSVC"}>Fyzická osoba podnikatel </option>
                                         <option value={"LEGAL_ENTITY"}>Právnická osoba</option>
